@@ -3,6 +3,7 @@
 // Call this function when the page loads (the "ready" event)
 $(document).ready(function() {
 	initializePage();
+	$("#everythingIsDead").hide();
 })
 
 /*
@@ -11,15 +12,33 @@ $(document).ready(function() {
 
 	function initializePage() {
 	$("#testjs").click(function(e) {
+		var button = $('#testjs');
+
+		if (button.hasClass("btn-danger")){
+			if (button.hasClass("aboutToBeDestroyed")){
+				destroy();
+			}
+			button.text("Seriously!");
+			button.addClass("aboutToBeDestroyed");
+		}else{
+			button.text("If you press me right now everyone is going to die");
+			button.addClass("btn-danger");
+			button.removeClass("btn-primary");
+		}
+
 		$('.jumbotron h1').text("Javascript is connected");
-		$('#testjs').text("If you press me right now everyone is going to die");
-		$('#testjs').addClass("btn btn-danger btn-lg");
 		$(".jumbotron p").toggleClass("active");
 
 	});
 
 
-	function projectClick() {
+	function destroy(){
+		$(".container").hide();
+		$("#everythingIsDead").fadeIn();
+	}
+
+	function projectClick(e) {
+		e.preventDefault();
 		var containingProject = $(this).closest(".project");
 		var description = $(containingProject).find(".project-description");
 
